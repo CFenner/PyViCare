@@ -1,8 +1,10 @@
 from contextlib import suppress
-from typing import Any, List, Optional
+from typing import Any, List, Optional, TYPE_CHECKING
 
 from PyViCare.PyViCareHeatCurveCalculation import (
     heat_curve_formular_variant1, heat_curve_formular_variant2)
+if TYPE_CHECKING:
+    from PyViCare.PyViCareHeatingDeviceWithComponent import HeatingDeviceWithComponent
 from PyViCare.PyViCareService import ViCareService
 from PyViCare.PyViCareUtils import (VICARE_DAYS,
                                     PyViCareNotSupportedFeatureError,
@@ -17,7 +19,7 @@ def all_set(_list: List[Any]) -> bool:
     return all(v is not None for v in _list)
 
 
-def get_available_burners(service):
+def get_available_burners(service: ViCareService) -> List[str]:
     # workaround starting from 25.01.2022
     # see: https://github.com/somm15/PyViCare/issues/243
     available_burners = []
@@ -58,11 +60,11 @@ class HeatingDevice:
         return heat_curve_formular_variant1
 
     @property
-    def burners(self) -> List[Any]:
+    def burners(self) -> List[HeatingDeviceWithComponent]:
         return []
 
     @property
-    def compressors(self) -> List[Any]:
+    def compressors(self) -> List[HeatingDeviceWithComponent]:
         return []
 
     @handleNotSupported
@@ -365,19 +367,6 @@ class HeatingDevice:
     def getReturnTemperatureSecondaryCircuit(self):
         return self.service.getProperty("heating.secondaryCircuit.sensors.temperature.return")["properties"]["value"][
             "value"]
-
-
-class HeatingDeviceWithComponent:
-    """This is the base class for all heating components"""
-
-    def __init__(self, device: HeatingDevice, component: str) -> None:
-        self.service = device.service
-        self.component = component
-        self.device = device
-
-    @property
-    def id(self) -> str:
-        return self.component
 
 
 class HeatingCircuit(HeatingDeviceWithComponent):

@@ -1,22 +1,46 @@
 from typing import Any, List
 
 from PyViCare.PyViCareHeatingDevice import (HeatingDevice,
-                                            HeatingDeviceWithComponent,
                                             get_available_burners)
+from PyViCare.PyViCareHeatingDeviceWithComponent import HeatingDeviceWithComponent
 from PyViCare.PyViCareUtils import handleNotSupported
+
+
+
+class GazBurner(HeatingDeviceWithComponent):
+
+    @property
+    def burner(self) -> str:
+        return self.component
+
+    @handleNotSupported
+    def getActive(self):
+        return self.service.getProperty(f"heating.burners.{self.burner}")["properties"]["active"]["value"]
+
+    @handleNotSupported
+    def getHours(self):
+        return self.service.getProperty(f"heating.burners.{self.burner}.statistics")["properties"]["hours"]["value"]
+
+    @handleNotSupported
+    def getStarts(self):
+        return self.service.getProperty(f"heating.burners.{self.burner}.statistics")["properties"]["starts"]["value"]
+
+    @handleNotSupported
+    def getModulation(self):
+        return self.service.getProperty(f"heating.burners.{self.burner}.modulation")["properties"]["value"]["value"]
 
 
 class GazBoiler(HeatingDevice):
 
     @property
-    def burners(self) -> List[Any]:
+    def burners(self) -> List[GazBurner]:
         return list([self.getBurner(x) for x in self.getAvailableBurners()])
 
-    def getBurner(self, burner):
+    def getBurner(self, burner: str) -> GazBurner:
         return GazBurner(self, burner)
 
     @handleNotSupported
-    def getAvailableBurners(self):
+    def getAvailableBurners(self) -> List[str]:
         return get_available_burners(self.service)
 
     @handleNotSupported
@@ -264,25 +288,3 @@ class GazBoiler(HeatingDevice):
     def getPowerSummaryConsumptionDomesticHotWaterLastYear(self):
         return self.service.getProperty("heating.power.consumption.summary.dhw")["properties"]["lastYear"]["value"]
 
-
-class GazBurner(HeatingDeviceWithComponent):
-
-    @property
-    def burner(self) -> str:
-        return self.component
-
-    @handleNotSupported
-    def getActive(self):
-        return self.service.getProperty(f"heating.burners.{self.burner}")["properties"]["active"]["value"]
-
-    @handleNotSupported
-    def getHours(self):
-        return self.service.getProperty(f"heating.burners.{self.burner}.statistics")["properties"]["hours"]["value"]
-
-    @handleNotSupported
-    def getStarts(self):
-        return self.service.getProperty(f"heating.burners.{self.burner}.statistics")["properties"]["starts"]["value"]
-
-    @handleNotSupported
-    def getModulation(self):
-        return self.service.getProperty(f"heating.burners.{self.burner}.modulation")["properties"]["value"]["value"]

@@ -1,8 +1,8 @@
 from typing import Any, List
 
 from PyViCare.PyViCareHeatingDevice import (HeatingDevice,
-                                            HeatingDeviceWithComponent,
                                             get_available_burners)
+from PyViCare.PyViCareHeatingDeviceWithComponent import HeatingDeviceWithComponent
 from PyViCare.PyViCareUtils import handleNotSupported
 
 

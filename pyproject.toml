@@ -59,7 +59,7 @@ disable = [
     "invalid-name",
     "too-many-public-methods",
     "too-few-public-methods",
-    # fix later
+    # FIXME:
     "arguments-differ",
     "attribute-defined-outside-init",
     "bad-classmethod-argument",
@@ -73,8 +73,6 @@ disable = [
     "missing-module-docstring",
     "missing-timeout",
     "raise-missing-from",
-    "super-init-not-called",
-    "too-many-boolean-expressions",
     "unspecified-encoding",
     "useless-object-inheritance",
     "useless-parent-delegation",

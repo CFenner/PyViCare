@@ -58,6 +58,12 @@ class TestForMissingProperties(unittest.TestCase):
             'heating.circuits.0.name',  # TODO: to analyse, from Vitodens 100W
             'heating.circuits.0.zone.mode',  # TODO: to analyse, from Vitocal 250A
 
+            'heating.buffer.sensors.temperature.main', # deprecated, removed 2024-09-15
+            'heating.buffer.sensors.temperature.top', # deprecated, removed 2024-09-15
+            'heating.dhw.sensors.temperature.hotWaterStorage', # deprecated, removed 2024-09-15
+            'heating.dhw.sensors.temperature.hotWaterStorage.top', # deprecated, removed 2024-09-15
+            'heating.dhw.sensors.temperature.hotWaterStorage.bottom', # deprecated, removed 2024-09-15
+
             # Ignored for now as both are not documented in https://documentation.viessmann.com/static/iot/data-points
             'device.messages.errors.raw',
             'device.productIdentification',
@@ -77,8 +83,7 @@ class TestForMissingProperties(unittest.TestCase):
             if not found and len(foundInFiles) > 0 and feature not in ignore:
                 missing_features[feature] = foundInFiles
 
-        has_missing_features = len(missing_features) > 0
-        self.assertFalse(has_missing_features, json.dumps(missing_features, sort_keys=True, indent=2))
+        self.assertDictEqual({}, missing_features)
 
     def test_unverifiedProperties(self):
         # with this test we want to verify if we access

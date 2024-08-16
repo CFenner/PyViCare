@@ -193,3 +193,19 @@ class Compressor(HeatingDeviceWithComponent):
     @handleNotSupported
     def getPhase(self):
         return self.service.getProperty(f"heating.compressors.{self.compressor}")["properties"]["phase"]["value"]
+
+    @handleNotSupported
+    def getDomesticHotWaterHysteresisUnit(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["properties"]["value"]["unit"]
+
+    @handleNotSupported
+    def getDomesticHotWaterHysteresis(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["properties"]["value"]["value"]
+
+    @handleNotSupported
+    def getDomesticHotWaterHysteresisSwitchOn(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["properties"]["switchOnValue"]["value"]
+
+    @handleNotSupported
+    def getDomesticHotWaterHysteresisSwitchOff(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["properties"]["switchOffValue"]["value"]

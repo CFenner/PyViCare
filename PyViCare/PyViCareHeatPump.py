@@ -3,7 +3,7 @@ from typing import Any, List
 
 from PyViCare.PyViCareHeatingDevice import (HeatingDevice,
                                             HeatingDeviceWithComponent)
-from PyViCare.PyViCareUtils import PyViCareNotSupportedFeatureError, handleNotSupported
+from PyViCare.PyViCareUtils import PyViCareNotSupportedFeatureError, handleAPICommandErrors, handleNotSupported
 
 
 class HeatPump(HeatingDevice):
@@ -201,6 +201,33 @@ class Compressor(HeatingDeviceWithComponent):
     @handleNotSupported
     def getDomesticHotWaterHysteresis(self):
         return self.service.getProperty("heating.dhw.temperature.hysteresis")["properties"]["value"]["value"]
+
+    @handleNotSupported
+    def getDomesticHotWaterHysteresisMin(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["commands"]["setHysteresis"]["params"]["hysteresis"]["constraints"]["min"]
+
+    @handleNotSupported
+    def getDomesticHotWaterHysteresisMax(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["commands"]["setHysteresis"]["params"]["hysteresis"]["constraints"]["max"]
+
+    @handleNotSupported
+    def getDomesticHotWaterHysteresisStepping(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["commands"]["setHysteresis"]["params"]["hysteresis"]["constraints"]["stepping"]
+
+    @handleAPICommandErrors
+    def setDomesticHotWaterHysteresis(self, temperature):
+        """ Set the hysteresis temperature for domestic host water
+        Parameters
+        ----------
+        temperature : float
+            hysteresis temperature
+
+        Returns
+        -------
+        result: json
+            json representation of the answer
+        """
+        return self.service.setProperty("heating.dhw.temperature.hysteresis", "setHysteresis", {'hysteresis': int(temperature)})
 
     @handleNotSupported
     def getDomesticHotWaterHysteresisSwitchOn(self):

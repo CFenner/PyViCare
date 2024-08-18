@@ -193,8 +193,62 @@ class HeatPump(HeatingDevice):
         return self.service.getProperty("heating.dhw.temperature.hysteresis")["properties"]["switchOnValue"]["value"]
 
     @handleNotSupported
+    def getDomesticHotWaterHysteresisSwitchOnMin(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["commands"]["setHysteresisSwitchOnValue"]["params"]["hysteresis"]["constraints"]["min"]
+
+    @handleNotSupported
+    def getDomesticHotWaterHysteresisSwitchOnMax(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["commands"]["setHysteresisSwitchOnValue"]["params"]["hysteresis"]["constraints"]["max"]
+
+    @handleNotSupported
+    def getDomesticHotWaterHysteresisSwitchOnStepping(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["commands"]["setHysteresisSwitchOnValue"]["params"]["hysteresis"]["constraints"]["stepping"]
+
+    @handleAPICommandErrors
+    def setDomesticHotWaterHysteresisSwitchOn(self, temperature):
+        """ Set the hysteresis switch on temperature for domestic host water
+        Parameters
+        ----------
+        temperature : float
+            hysteresis switch on temperature
+
+        Returns
+        -------
+        result: json
+            json representation of the answer
+        """
+        return self.service.setProperty("heating.dhw.temperature.hysteresis", "setHysteresisSwitchOnValue", {'hysteresis': int(temperature)})
+
+    @handleNotSupported
     def getDomesticHotWaterHysteresisSwitchOff(self):
         return self.service.getProperty("heating.dhw.temperature.hysteresis")["properties"]["switchOffValue"]["value"]
+
+    @handleNotSupported
+    def getDomesticHotWaterHysteresisSwitchOffMin(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["commands"]["setHysteresisSwitchOffValue"]["params"]["hysteresis"]["constraints"]["min"]
+
+    @handleNotSupported
+    def getDomesticHotWaterHysteresisSwitchOffMax(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["commands"]["setHysteresisSwitchOffValue"]["params"]["hysteresis"]["constraints"]["max"]
+
+    @handleNotSupported
+    def getDomesticHotWaterHysteresisSwitchOffStepping(self):
+        return self.service.getProperty("heating.dhw.temperature.hysteresis")["commands"]["setHysteresisSwitchOffValue"]["params"]["hysteresis"]["constraints"]["stepping"]
+
+    @handleAPICommandErrors
+    def setDomesticHotWaterHysteresisSwitchOff(self, temperature):
+        """ Set the hysteresis switch off temperature for domestic host water
+        Parameters
+        ----------
+        temperature : float
+            hysteresis switch off temperature
+
+        Returns
+        -------
+        result: json
+            json representation of the answer
+        """
+        return self.service.setProperty("heating.dhw.temperature.hysteresis", "setHysteresisSwitchOffValue", {'hysteresis': int(temperature)})
 
 class Compressor(HeatingDeviceWithComponent):
 

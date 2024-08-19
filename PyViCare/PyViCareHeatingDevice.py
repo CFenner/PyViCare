@@ -110,7 +110,6 @@ class HeatingDevice(Device):
             if mode == VICARE_DHW_TEMP2:
                 return self.getDomesticHotWaterConfiguredTemperature2()
             return self.getDomesticHotWaterConfiguredTemperature()
-
         return None
 
     @handleNotSupported

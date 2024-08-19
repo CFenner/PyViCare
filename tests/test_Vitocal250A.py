@@ -131,12 +131,32 @@ class Vitocal250A(unittest.TestCase):
 
     def test_getDomesticHotWaterHysteresis(self):
         self.assertEqual(
-            self.device.getDomesticHotWaterHysteresis(), 5)
-        self.assertEqual(
             self.device.getDomesticHotWaterHysteresisUnit(), 'kelvin')
+        self.assertEqual(
+            self.device.getDomesticHotWaterHysteresis(), 5)
         self.assertEqual(
             self.device.getDomesticHotWaterHysteresisMin(), 1)
         self.assertEqual(
             self.device.getDomesticHotWaterHysteresisMax(), 10)
         self.assertEqual(
             self.device.getDomesticHotWaterHysteresisStepping(), 0.5)
+
+    def test_getDomesticHotWaterHysteresisSwitchOn(self):
+        self.assertEqual(
+            self.device.getDomesticHotWaterHysteresisSwitchOn(), 5)
+        self.assertEqual(
+            self.device.getDomesticHotWaterHysteresisSwitchOnMin(), 1)
+        self.assertEqual(
+            self.device.getDomesticHotWaterHysteresisSwitchOnMax(), 10)
+        self.assertEqual(
+            self.device.getDomesticHotWaterHysteresisSwitchOnStepping(), 0.5)
+
+    def test_getDomesticHotWaterHysteresisSwitchOff(self):
+        self.assertEqual(
+            self.device.getDomesticHotWaterHysteresisSwitchOff(), 0)
+        self.assertEqual(
+            self.device.getDomesticHotWaterHysteresisSwitchOffMin(), 0)
+        self.assertEqual(
+            self.device.getDomesticHotWaterHysteresisSwitchOffMax(), 2.5)
+        self.assertEqual(
+            self.device.getDomesticHotWaterHysteresisSwitchOffStepping(), 0.5)

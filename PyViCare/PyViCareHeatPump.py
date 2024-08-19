@@ -185,7 +185,7 @@ class HeatPump(HeatingDevice):
         result: json
             json representation of the answer
         """
-        return self.service.setProperty("heating.dhw.temperature.hysteresis", "setHysteresis", {'hysteresis': int(temperature)})
+        return self.service.setProperty("heating.dhw.temperature.hysteresis", "setHysteresis", {'hysteresis': temperature})
 
     @handleNotSupported
     def getDomesticHotWaterHysteresisSwitchOn(self) -> float:
@@ -216,7 +216,7 @@ class HeatPump(HeatingDevice):
         result: json
             json representation of the answer
         """
-        return self.service.setProperty("heating.dhw.temperature.hysteresis", "setHysteresisSwitchOnValue", {'hysteresis': int(temperature)})
+        return self.service.setProperty("heating.dhw.temperature.hysteresis", "setHysteresisSwitchOnValue", {'hysteresis': temperature})
 
     @handleNotSupported
     def getDomesticHotWaterHysteresisSwitchOff(self) -> float:
@@ -247,7 +247,7 @@ class HeatPump(HeatingDevice):
         result: json
             json representation of the answer
         """
-        return self.service.setProperty("heating.dhw.temperature.hysteresis", "setHysteresisSwitchOffValue", {'hysteresis': int(temperature)})
+        return self.service.setProperty("heating.dhw.temperature.hysteresis", "setHysteresisSwitchOffValue", {'hysteresis': temperature})
 
 class Compressor(HeatingDeviceWithComponent):
 

@@ -6,7 +6,7 @@ from tests.ViCareServiceMock import ViCareServiceMock
 
 class VitoairFs300(unittest.TestCase):
     def setUp(self):
-        self.service = ViCareServiceMock('response/VitoairFS300E.json')
+        self.service = ViCareServiceMock('response/VitoairFs300E.json')
         self.device = VentilationDevice(self.service)
 
     def test_getActiveMode(self):

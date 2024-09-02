@@ -13,6 +13,46 @@ class PythonFile:
 
 
 class TestForMissingProperties(unittest.TestCase):
+
+    def test_deprecatedProperties(self):
+        # with this test we want to check if properties are marked as deprecated in the response files
+
+        mitigated = [
+            'heating.buffer.sensors.temperature.main',
+            'heating.buffer.sensors.temperature.top',
+            'heating.configuration.dhw.temperature.dhwCylinder.max',
+            'heating.dhw.sensors.temperature.hotWaterStorage',
+            'heating.dhw.sensors.temperature.hotWaterStorage.top',
+            'heating.dhw.sensors.temperature.hotWaterStorage.middle',
+            'heating.dhw.sensors.temperature.hotWaterStorage.bottom',
+            'heating.circuits.0.operating.programs.summerEco',
+        ]
+        # the usage of these data points need to be fixed
+        todo = [
+            'ventilation.operating.programs.eco',
+            'ventilation.operating.programs.comfort',
+            'ventilation.operating.programs.holiday',
+            'ventilation.operating.programs.levelOne',
+            'ventilation.operating.programs.levelTwo',
+            'ventilation.operating.programs.levelThree',
+            'ventilation.operating.programs.levelFour',
+            'ventilation.operating.programs.forcedLevelFour',
+            'ventilation.operating.programs.silent',
+        ]
+
+        all_features = self.read_all_features()
+
+        deprecated_features = {}
+        for feature in all_features:
+            if len(deprecated_features) < 3 and "deprecated" in all_features[feature]:
+                deprecated_features[feature] = all_features[feature]["deprecated"]
+
+        # self.assertDictEqual({}, deprecated_features)
+        for feature in deprecated_features:
+            if feature not in todo and feature not in mitigated:
+                self.fail(f"{feature} is deprecated ({deprecated_features[feature]})")
+
+
     def test_missingProperties(self):
         # with this test we want to check if new properties
         # are added to the response files
@@ -172,6 +212,9 @@ class TestForMissingProperties(unittest.TestCase):
                     name = re.sub(r"\b\d\b", "0", feature["feature"])
                     if name not in all_features:
                         all_features[name] = {'files': []}
+
+                    if "deprecated" in feature:
+                        all_features[name]['deprecated'] = feature["deprecated"]["info"]
 
                     if feature['isEnabled'] and feature['properties'] != {}:
                         all_features[name]['files'].append(response)

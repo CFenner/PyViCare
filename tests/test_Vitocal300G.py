@@ -14,60 +14,53 @@ class Vitocal300G(unittest.TestCase):
 
     def test_getCompressorHours(self):
         self.assertAlmostEqual(
-            self.device.compressors[0].getHours(), 1762.41)
+            self.device.compressors[0].getHours(), 384.3)
 
     def test_getCompressorStarts(self):
         self.assertAlmostEqual(
-            self.device.compressors[0].getStarts(), 3012)
+            self.device.compressors[0].getStarts(), 436)
 
-    def test_getCompressorHoursLoadClass1(self):
+    @unittest.skip("data point not present in the current test response")
+    def test_getCompressorHoursLoadClass(self):
         self.assertAlmostEqual(
             self.device.compressors[0].getHoursLoadClass1(), 30)
-
-    def test_getCompressorHoursLoadClass2(self):
         self.assertAlmostEqual(
             self.device.compressors[0].getHoursLoadClass2(), 703)
-
-    def test_getCompressorHoursLoadClass3(self):
         self.assertAlmostEqual(
             self.device.compressors[0].getHoursLoadClass3(), 878)
-
-    def test_getCompressorHoursLoadClass4(self):
         self.assertAlmostEqual(
             self.device.compressors[0].getHoursLoadClass4(), 117)
-
-    def test_getCompressorHoursLoadClass5(self):
         self.assertAlmostEqual(
             self.device.compressors[0].getHoursLoadClass5(), 20)
 
     def test_getHeatingCurveSlope(self):
         self.assertAlmostEqual(
-            self.device.circuits[0].getHeatingCurveSlope(), 0.8)
+            self.device.circuits[0].getHeatingCurveSlope(), 0.4)
 
     def test_getHeatingCurveShift(self):
         self.assertAlmostEqual(
-            self.device.circuits[0].getHeatingCurveShift(), -5)
+            self.device.circuits[0].getHeatingCurveShift(), 0)
 
     def test_getReturnTemperature(self):
-        self.assertAlmostEqual(self.device.getReturnTemperature(), 18.9)
+        self.assertAlmostEqual(self.device.getReturnTemperature(), 26.1)
 
     def test_getReturnTemperaturePrimaryCircuit(self):
-        self.assertAlmostEqual(self.device.getReturnTemperaturePrimaryCircuit(), 18.4)
+        self.assertAlmostEqual(self.device.getReturnTemperaturePrimaryCircuit(), 28)
 
     def test_getSupplyTemperaturePrimaryCircuit(self):
         self.assertAlmostEqual(
-            self.device.getSupplyTemperaturePrimaryCircuit(), 18.2)
+            self.device.getSupplyTemperaturePrimaryCircuit(), 28.8)
 
     def test_getPrograms(self):
-        expected_programs = ['comfort', 'eco', 'fixed', 'holiday', 'normal', 'reduced', 'standby']
+        expected_programs = ['comfort', 'eco', 'fixed', 'normal', 'reduced', 'standby']
         self.assertListEqual(
-            self.device.circuits[0].getPrograms(), expected_programs)
+            expected_programs, self.device.circuits[0].getPrograms())
 
     def test_getModes(self):
-        expected_modes = ['dhw', 'dhwAndHeating', 'forcedNormal', 'forcedReduced', 'standby', 'normalStandby']
+        expected_modes = ['dhw', 'dhwAndHeating', 'standby']
         self.assertListEqual(
-            self.device.circuits[0].getModes(), expected_modes)
+            expected_modes, self.device.circuits[0].getModes())
 
     def test_getDomesticHotWaterCirculationPumpActive(self):
         self.assertEqual(
-            self.device.getDomesticHotWaterCirculationPumpActive(), False)
+            self.device.getDomesticHotWaterCirculationPumpActive(), True)

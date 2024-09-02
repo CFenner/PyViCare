@@ -73,12 +73,13 @@ class TestForMissingProperties(unittest.TestCase):
             'gateway.devices', # not used
 
             # ventilation - not yet used
-            'ventilation.levels.levelOne',
-            'ventilation.levels.levelTwo',
-            'ventilation.levels.levelThree',
-            'ventilation.levels.levelFour',
-            'ventilation.quickmodes.forcedLevelFour',
-            'ventilation.quickmodes.silent',
+            'ventilation.levels.levelOne', # not documented
+            'ventilation.levels.levelTwo', # not documented
+            'ventilation.levels.levelThree', # not documented
+            'ventilation.levels.levelFour', # not documented
+            'ventilation.quickmodes.forcedLevelFour', # not documented
+            'ventilation.quickmodes.silent', # not documented
+            'ventilation.operating.state', # not documented
         ]
 
         all_features = self.read_all_features()

@@ -32,6 +32,17 @@ class PyViCare:
     def initWithBrowserOAuth(self, client_id: str, token_file: str) -> None:
         self.initWithExternalOAuth(ViCareBrowserOAuthManager(client_id, token_file))
 
+    def initWithAllDevices(self, client_id: str, token_file: str) -> None:
+        self.oauth_manager = ViCareBrowserOAuthManager(client_id, token_file)
+        self.__loadInstallations()
+
+
+
+        self.devices = list(self.__extr__extract_devices_allDevicesact_devices())
+
+        self.gateways = list()
+
+
     def __buildService(self, accessor, roles):
         if self.cacheDuration > 0:
             return ViCareCachedService(self.oauth_manager, accessor, roles, self.cacheDuration)
@@ -58,6 +69,21 @@ class PyViCare:
                     accessor = ViCareDeviceAccessor(
                         installation.id, gateway.serial, device.id)
                     service = self.__buildService(accessor, device.roles)
+
+                    logger.info("Device found: %s", device.modelId)
+
+                    yield PyViCareDeviceConfig(service, device.id, device.modelId, device.status)
+
+    def __extract_devices_allDevices(self):
+        for installation in self.installations:
+            for gateway in installation.gateways:
+                accessor = ViCareDeviceAccessor(
+                    installation.id, gateway.serial, device.id)
+                service = self.__buildService(accessor, device.roles)
+                for device in gateway.devices:
+                    if device.deviceType not in ["heating", "zigbee", "vitoconnect", "electricityStorage", "tcu", "ventilation"]:
+                        continue  # we are only interested in heating, photovoltaic, electricityStorage, and ventilation devices
+
 
                     logger.info("Device found: %s", device.modelId)
 

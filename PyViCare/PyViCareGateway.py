@@ -1,5 +1,5 @@
 from PyViCare.PyViCareDevice import Device
-from PyViCare.PyViCareUtils import handleNotSupported
+from PyViCare.PyViCareUtils import handleAPICommandErrors, handleNotSupported
 
 
 class Gateway(Device):
@@ -11,3 +11,7 @@ class Gateway(Device):
     @handleNotSupported
     def getWifiSignalStrength(self):
         return self.service.getProperty("gateway.wifi")["properties"]["strength"]["value"]
+
+    @handleAPICommandErrors
+    def reboot(self):
+        return self.service.executeEquipmentAction("reboot")

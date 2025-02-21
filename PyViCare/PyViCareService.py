@@ -57,6 +57,9 @@ class ViCareService:
         post_data = data if isinstance(data, str) else json.dumps(data)
         return self.oauth_manager.post(url, post_data)
 
+    def executeEquipmentAction(self, action: str) -> Any:
+        return self.oauth_manager.post(f'/equipment/installations/{self.accessor.id}/gateways/{self.accessor.serial}/{action}')
+
     def fetch_all_features(self) -> Any:
         url = f'/features/installations/{self.accessor.id}/gateways/{self.accessor.serial}/devices/{self.accessor.device_id}/features/'
         if self._isGateway():

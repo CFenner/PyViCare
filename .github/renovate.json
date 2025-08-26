@@ -19,8 +19,19 @@
     },
     {
       "matchDatasources": ["pypi"],
-      "matchPackageNames": ["types-*"],
-      "overrideDepName": "{{replace 'types-' '' depName}}"
+      "groupName": "deprecated",
+      "matchPackageNames": [
+        "deprecated",
+        "types-deprecated"
+      ],
+    },
+    {
+      "matchDatasources": ["pypi"],
+      "groupName": "requests",
+      "matchPackageNames": [
+        "requests",
+        "types-requests"
+      ],
     },
     {
       "matchDepTypes": ["devDependencies"],

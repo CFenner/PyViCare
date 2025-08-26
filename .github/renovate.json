@@ -18,6 +18,11 @@
       "description": "Automerge check tools"
     },
     {
+      "matchDatasources": ["pypi"],
+      "matchPackageNames": ["types-*"],
+      "overrideDepName": "{{replace 'types-' '' depName}}"
+    },
+    {
       "matchDepTypes": ["devDependencies"],
       "labels": ["maintenance"]
     }

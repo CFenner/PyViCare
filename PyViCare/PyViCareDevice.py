@@ -1,6 +1,6 @@
 from typing import Any
 
-from PyViCare.PyViCareService import ViCareService
+from PyViCare.PyViCareService import ViCareDeviceAccessor, ViCareService
 from PyViCare.PyViCareUtils import PyViCareNotSupportedFeatureError, handleAPICommandErrors, handleNotSupported
 
 
@@ -11,8 +11,12 @@ class Device:
     Note that currently, a new token is generated for each run.
     """
 
-    def __init__(self, service: ViCareService) -> None:
+    def __init__(self, accessor: ViCareDeviceAccessor, service: ViCareService) -> None:
+        self.accessor = accessor
         self.service = service
+
+    def getProperty(self, property_name: str) -> Any:
+        return self.service.getProperty(self.accessor, property_name)
 
     @handleNotSupported
     def getSerial(self):
